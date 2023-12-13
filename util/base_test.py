@@ -6,7 +6,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 @pytest.fixture(scope="function")
-def base_fixture(driver_fixture):
+def selenium_fixture(driver_fixture):
     actions = Actions(driver_fixture)
+    yield actions
+
+@pytest.fixture(scope="function")
+def opencv_fixture():
     vid_validation = vidObj()
-    yield actions, vid_validation
+    yield vid_validation

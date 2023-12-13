@@ -2,15 +2,15 @@ import logging
 import pytest
 import time, cv2
 from cap_from_youtube import cap_from_youtube
-from util.base_test import base_fixture
+from util.base_test import opencv_fixture
 
 logger = logging.getLogger(__name__)
 
 class TestMediaControlsOpenCV:
 
     @pytest.mark.media_controls_standalone
-    def test_media_controls_for_standalone_video(self, base_fixture):
-        actions, vid_validation = base_fixture
+    def test_media_controls_for_standalone_video(self, opencv_fixture):
+        vid_validation = opencv_fixture
         progress, progress2 , progress3= False, False, False
         with vid_validation.media_control(source="tests/input/DaniilvsDjokovic.mp4") as omc:
             for _ in omc.get_frames():
@@ -47,11 +47,11 @@ class TestMediaControlsOpenCV:
                     omc.stop()
 
     @pytest.mark.media_controls_yt
-    def test_media_controls_for_yt_video(self, base_fixture):
-        actions, vid_validation = base_fixture
+    def test_media_controls_for_yt_video(self, opencv_fixture):
+        vid_validation = opencv_fixture
         progress, progress2, progress3 = False, False, False
         url = "https://www.youtube.com/watch?v=5QT58KZ11ys"
-        cap = cap_from_youtube(url)
+        cap = cap_from_youtube(url, '1080p')
         with vid_validation.media_control(source=cap) as omc:
             for _ in omc.get_frames():
                 omc.show_frame()
@@ -83,7 +83,7 @@ class TestMediaControlsOpenCV:
                     progress3 = True
                 if int(omc.frame_count) == 600 and progress3:
                     assert int(omc.num_frames / omc.stream_fps / 60) == 3
-                    assert f"{omc.width_of_frames} * {omc.height_of_frames}" == "3840.0 * 2160.0"
+                    assert f"{omc.width_of_frames} * {omc.height_of_frames}" == "1920.0 * 1080.0"
                     omc.stop()
 
 
