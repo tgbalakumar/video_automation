@@ -1,0 +1,21 @@
+tests:
+  selenium:
+    url: "https://www.youtube.com/watch?v=HWeTRgFft1M"
+    duration: 6
+    current_time: 3
+    resolution: "480*854"
+    default_playback: 1
+  audio:
+    url: "https://www.youtube.com/shorts/eT890bLLrjk"
+    output: "Parrot Photobombs Highway Traffic Cam Shorts.mp4"
+    input: "tests/input/Parrot.mp4"
+  media_control:
+    standalone:
+      source: "tests/input/godofwar.mp4"
+      resolution: "1280.0 * 720.0"
+      duration: 10
+    yt:
+      source: "https://www.youtube.com/watch?v=5QT58KZ11ys"
+      resolution: "1920.0 * 1080.0"
+      duration: 10
+

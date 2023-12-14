@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 class TestObjectRelevanceInVideo:
 
     @pytest.mark.find_object_relevance
+    @pytest.mark.common
     @pytest.mark.parametrize("url, objects", [("https://www.youtube.com/shorts/yiYLEpRkS_U", {"sports ball", "person", "tennis racket"}),
                                               ("https://www.youtube.com/shorts/BsCRHvZwHXA", {'truck', 'traffic light', 'stop sign'}),
                                               ("https://www.youtube.com/shorts/s8PfCAo1pZQ", {'giraffe', 'frisbee', 'elephant'}),
@@ -14,4 +15,6 @@ class TestObjectRelevanceInVideo:
     def test_objects_relevance_in_video(self, opencv_fixture, url, objects):
         vid_validation = opencv_fixture
         logger.info(f"objects available are {objects}")
-        assert vid_validation.yolo_video().find_relevance(url) == objects
+        actual_objects = vid_validation.yolo_video().find_relevance(url)
+        logger.info(f"the actual identified objects are {actual_objects}")
+        assert actual_objects == objects
